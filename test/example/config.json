@@ -1,0 +1,9 @@
+{
+  "contents": "./contents",
+  "plugins": [
+    "./../../index.js"
+  ],
+  "sassify": {
+    "sourceMap": true
+  }
+}
