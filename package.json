@@ -9,16 +9,19 @@
     "wintersmith-plugin"
   ],
   "dependencies": {
+    "coffee-script": "^1.10",
+    "node-sass": "3.x"
   },
   "devDependencies": {
     "async": "2.x",
-    "coffee-script": ">=1.10",
-    "vows": "0.8.x",
-    "wintersmith": "2.x"
+    "vows": "0.8.x"
   },
   "peerDependencies": {
-    "wintersmith": "2.x",
-    "node-sass": "3.x"
+    "wintersmith": "2.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/btippett/wintersmith-sassify.git"
   },
   "scripts": {
     "test": "vows test --spec"
