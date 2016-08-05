@@ -1,6 +1,6 @@
 {
   "name": "wintersmith-sassify",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "description": "A fully configurable Wintersmith plugin for compiling Sass with Node Sass.",
   "author": "brad@bradtippett.com",
   "license": "GNU GPLv3",
