@@ -92,7 +92,7 @@ module.exports = (env, callback) ->
     constructor: (@sassFile) ->
 
     getFilename: ->
-      @sassFile.filePath.relative.replace /\.s[ac]ss$/i, '.css'
+      @sassFile.filePath.relative.replace /\.[a-z0-9]+$/i, '.css'
 
     getUrl: ->
       super env.config.baseUrl
@@ -109,7 +109,7 @@ module.exports = (env, callback) ->
       @customName = if sourceMap and sourceMap.length then sourceMap else false
 
     getFilename: ->
-      @customName or @sassFile.filePath.relative.replace /\.s[ac]ss$/i, '.css.map'
+      @customName or @sassFile.filePath.relative.replace /\.[a-z0-9]+$/i, '.css.map'
 
     getUrl: ->
       @customName or super env.config.baseUrl
@@ -155,7 +155,7 @@ module.exports = (env, callback) ->
   # constructed first and then, if necessary, the CSS and/or SourceMap instances
   # will be added to the plugin's content tree.
   Sass.fromFile = (filePath, callback) ->
-    filePath.name = /[^\\\/\.]*\.s[ac]ss$/i.exec(filePath.relative)[0]
+    filePath.name = /[^\\\/\.]*\.[a-z0-9]+$/i.exec(filePath.relative)[0]
 
     if config.includePaths.indexOf(folder = filePath.full.replace filePath.name, '') < 0
       config.includePaths.push folder
