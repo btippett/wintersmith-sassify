@@ -5,7 +5,9 @@ The Wintersmith Sassify plugin is the most configurable [Node Sass](https://gith
 
 ## Installing
 
-`wintersmith plugin install wintersmith-sassify`
+```
+wintersmith plugin install wintersmith-sassify
+```
 
 Or if you prefer installing via NPM:
 
