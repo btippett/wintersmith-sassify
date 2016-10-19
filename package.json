@@ -5,6 +5,10 @@
   "author": "brad@bradtippett.com",
   "license": "GNU GPLv3",
   "keywords": [
+    "css",
+    "node",
+    "node-sass",
+    "sass",
     "wintersmith",
     "wintersmith-plugin"
   ],
