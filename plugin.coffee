@@ -50,7 +50,6 @@ module.exports = (env, callback) ->
     constructor: (@filePath, fileContents) ->
       @config =
         file: @filePath.full
-        data: do fileContents.toString
         indentedSyntax: if /\.sass$/.test(@filePath.relative) then true else config.indentedSyntax
 
       unless do @isPartial
@@ -67,8 +66,14 @@ module.exports = (env, callback) ->
     getFilename: ->
       @filePath.relative
 
-    getView: -> (env, locals, contents, templates, callback) ->
-      callback null, Buffer.from @config.data
+    getView: ->
+      (env, locals, contents, templates, callback) ->
+        try
+          stream = fs.createReadStream @filePath.full
+        catch err
+          return callback err
+
+        callback null, stream
 
     hasSourceMap: ->
       sassConfig = do @getConfig
@@ -78,12 +83,11 @@ module.exports = (env, callback) ->
       /^_/.test @filePath.name
 
     # Any CSS or source maps derived from this file will use this method to
-    # render their output. Note that the rendered Sass file is cached.
+    # render their output.
     render: (output, callback) ->
-      return callback null, @rendered[output] if @rendered
       nodeSass.render do @getConfig, (err, result) =>
         return callback err if err or not result?[output]
-        callback null, (@rendered = result)[output]
+        callback null, result[output]
 
 
   # The CSS plugin manages any CSS that is to be output by a Sass file.
@@ -97,8 +101,9 @@ module.exports = (env, callback) ->
     getUrl: ->
       super env.config.baseUrl
 
-    getView: -> (env, locals, contents, templates, callback) ->
-      @sassFile.render 'css', callback
+    getView: ->
+      (env, locals, contents, templates, callback) ->
+        @sassFile.render 'css', callback
 
 
   # The SourceMap plugin manages any source maps to be output by a Sass file.
@@ -114,10 +119,11 @@ module.exports = (env, callback) ->
     getUrl: ->
       @customName or super env.config.baseUrl
 
-    getView: -> (env, locals, contents, templates, callback) ->
-      @sassFile.render 'map', (err, result) =>
-        return callback err if err or not result
-        @resolveSourcePaths result, callback
+    getView: ->
+      (env, locals, contents, templates, callback) ->
+        @sassFile.render 'map', (err, result) =>
+          return callback err if err or not result
+          @resolveSourcePaths result, callback
 
     # Source paths from Node Sass will be file paths rather than URLs so they
     # need to be resolved to relative URLs.
