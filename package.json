@@ -20,6 +20,9 @@
     "async": "2.x",
     "vows": "0.8.x"
   },
+  "engines":  {
+    "node" : ">=6.0"
+  },
   "peerDependencies": {
     "wintersmith": "2.x"
   },
